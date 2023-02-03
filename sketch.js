@@ -14,21 +14,21 @@ var score=0;
 var gameOver, restart;
 
 function preload(){
-  kangaroo_running =   loadAnimation("assets/kangaroo1.png","assets/kangaroo2.png","assets/kangaroo3.png");
-  kangaroo_collided = loadAnimation("assets/kangaroo1.png");
-  jungleImage = loadImage("assets/bg.png");
-  shrub1 = loadImage("assets/shrub1.png");
-  shrub2 = loadImage("assets/shrub2.png");
-  shrub3 = loadImage("assets/shrub3.png");
-  obstacle1 = loadImage("assets/stone.png");
-  gameOverImg = loadImage("assets/gameOver.png");
-  restartImg = loadImage("assets/restart.png");
-  jumpSound = loadSound("assets/jump.wav");
-  collidedSound = loadSound("assets/collided.wav");
+  kangaroo_running =   loadAnimation("kangaroo1.png","kangaroo2.png","kangaroo3.png");
+  kangaroo_collided = loadAnimation("kangaroo1.png");
+  jungleImage = loadImage("bg.png");
+  shrub1 = loadImage("shrub1.png");
+  shrub2 = loadImage("shrub2.png");
+  shrub3 = loadImage("shrub3.png");
+  obstacle1 = loadImage("stone.png");
+  gameOverImg = loadImage("gameOver.png");
+  restartImg = loadImage("restart.png");
+  jumpSound = loadSound("jump.wav");
+  collidedSound = loadSound("collided.wav");
 }
 
 function setup() {
-  createCanvas(800, 400);
+  createCanvas(windowWidth,windowHeight);
 
   jungle = createSprite(400,100,400,20);
   jungle.addImage("jungle",jungleImage);
@@ -89,12 +89,12 @@ function draw() {
 
     kangaroo.collide(invisibleGround);
     //write a condition for gamestate should end.
-    if(){
+    if(shrubsGroup.isTouching(kangaroo)){
       collidedSound.play();
       gameState = END;
     }
     //write a condition when the score should increase
-    if(){
+    if(gameState=PLAY){
       score = score + 1;
       shrubsGroup.destroyEach();
     }
@@ -199,7 +199,9 @@ function reset(){
   restart.visible = false;
   kangaroo.visible = true;
   //change animation of the kangaroo
+  kangaroo.changeAnimation=("running",kangaroo_running);
   //destroy the shrubs and obstacle group
-  
+  shrubsGroup.destroyEach();
+  obstaclesGroup.destroyEach();
   score = 0;
 }
